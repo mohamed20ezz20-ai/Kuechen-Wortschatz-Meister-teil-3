@@ -3,212 +3,253 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Küchen-Wortschatz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+  <title>🍽️ Küchen-Wortschatz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --gold: #d4af37;
+      --dark-red: #8b0000;
       --dark: #0f0005;
     }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      margin:0;
-      font-family:'Poppins',sans-serif;
-      background:linear-gradient(135deg,#000,var(--dark));
-      color:#f5e8c0;
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:12px;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #000, var(--dark));
+      color: #f5e8c0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
     }
     .container {
-      width:100%;
-      max-width:500px;
-      background:rgba(10,0,0,0.92);
-      border-radius:20px;
-      border:3px solid var(--gold);
-      overflow:hidden;
-      box-shadow:0 0 40px rgba(212,175,55,0.3);
+      width: 100%;
+      max-width: 520px;
+      background: rgba(10,0,0,0.92);
+      border-radius: 20px;
+      border: 3px solid var(--gold);
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(212,175,55,0.3);
     }
-    .screen {display:none;padding:24px;flex-direction:column;}
-    .screen.active {display:flex;}
-    h1 {color:var(--gold);text-align:center;margin-bottom:20px;font-size:2rem;text-shadow:0 0 12px rgba(212,175,55,0.6);}
+    .screen { display: none; padding: 28px; flex-direction: column; }
+    .screen.active { display: flex; }
+    h1 { color: var(--gold); text-align: center; margin-bottom: 24px; font-size: 2.2rem; text-shadow: 0 0 12px rgba(212,175,55,0.6); }
+
     .flashcard {
-      height:360px;
-      perspective:1400px;
-      margin:20px 0;
+      height: 380px;
+      perspective: 1400px;
+      margin: 24px 0;
     }
     .card-inner {
-      width:100%;
-      height:100%;
-      position:relative;
-      transform-style:preserve-3d;
-      transition:transform 0.7s ease;
-      cursor:pointer;
-      border-radius:16px;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+      cursor: pointer;
+      border-radius: 16px;
     }
-    .card-inner.flipped {transform:rotateY(180deg);}
+    .card-inner.flipped { transform: rotateY(180deg); }
     .card-face {
-      position:absolute;
-      inset:0;
-      backface-visibility:hidden;
-      border-radius:16px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      padding:20px;
-      text-align:center;
-      border:3px solid var(--gold);
-      box-shadow:0 10px 35px rgba(0,0,0,0.8);
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      text-align: center;
+      border: 3px solid var(--gold);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     }
-    .front {background:linear-gradient(145deg,#140000,#000);}
-    .back  {background:linear-gradient(145deg,#220000,#0f0005);transform:rotateY(180deg);}
-    .article {font-size:2.2rem;font-weight:800;margin-bottom:10px;}
-    .der {color:#42a5f5;text-shadow:0 0 10px #42a5f566;}
-    .die  {color:#ff5252;text-shadow:0 0 10px #ff525266;}
-    .das  {color:#66bb6a;text-shadow:0 0 10px #66bb6a66;}
-    .word {font-size:2.8rem;font-weight:900;color:#ffeb3b;margin:10px 0;}
-    .meaning {font-size:1.1rem;line-height:1.5;background:rgba(0,0,0,0.5);padding:16px;border-radius:12px;border:1px solid var(--gold);width:100%;}
-    .controls {display:flex;justify-content:center;gap:16px;margin-top:24px;flex-wrap:wrap;}
+    .front { background: linear-gradient(145deg, #140000, #000); }
+    .back  { background: linear-gradient(145deg, #220000, #0f0005); transform: rotateY(180deg); }
+
+    .article { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
+    .der { color: #42a5f5; text-shadow: 0 0 10px #42a5f566; }
+    .die  { color: #ff5252; text-shadow: 0 0 10px #ff525266; }
+    .das  { color: #66bb6a; text-shadow: 0 0 10px #66bb6a66; }
+
+    .word   { font-size: 3rem; font-weight: 900; color: #ffeb3b; margin: 12px 0; }
+    .meaning { font-size: 1.15rem; line-height: 1.55; background: rgba(0,0,0,0.45); padding: 16px; border-radius: 12px; border: 1px solid var(--gold); width: 100%; }
+    .synonyms { margin: 16px 0; font-size: 1rem; color: #e0c070; }
+    .example  { margin-top: 16px; font-style: italic; color: #d4af37; font-size: 1.05rem; }
+
+    .controls { display: flex; justify-content: center; gap: 16px; margin-top: 28px; flex-wrap: wrap; }
     button {
-      background:linear-gradient(145deg,var(--gold),#ffeb3b);
-      color:#000;
-      border:none;
-      padding:12px 26px;
-      font-size:1rem;
-      font-weight:700;
-      border-radius:50px;
-      cursor:pointer;
-      min-width:130px;
-      box-shadow:0 5px 15px rgba(212,175,55,0.4);
+      background: linear-gradient(145deg, var(--gold), #ffeb3b);
+      color: #000;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      min-width: 140px;
+      box-shadow: 0 6px 20px rgba(212,175,55,0.4);
     }
-    button:hover {transform:translateY(-2px);}
-    .btn-red {background:linear-gradient(145deg,#8b0000,#c62828);color:#ffeb3b;}
+    button:hover { transform: translateY(-2px); }
+    .btn-red { background: linear-gradient(145deg, #8b0000, #c62828); color: #ffeb3b; }
   </style>
 </head>
 <body>
 
 <div class="container">
 
-  <div id="s-name" class="screen active">
+  <div id="screen-name" class="screen active">
     <h1>Willkommen!</h1>
-    <input type="text" id="name" placeholder="Dein Name..." style="width:100%;padding:14px;font-size:1.1rem;text-align:center;background:#111;color:#ffeb3b;border:2px solid var(--gold);border-radius:12px;">
+    <input type="text" id="inp-name" placeholder="Dein Name..." style="width:100%; padding:16px; font-size:1.2rem; text-align:center; background:#111; color:#ffeb3b; border:2px solid var(--gold); border-radius:12px;">
     <div class="controls">
-      <button id="start">Start lernen</button>
+      <button id="btn-start">Start lernen</button>
     </div>
   </div>
 
-  <div id="s-cards" class="screen">
-    <h2>Lernkarte <span id="n">1</span></h2>
+  <div id="screen-cards" class="screen">
+    <h2>Lernkarte <span id="num">1</span></h2>
     <div class="flashcard">
-      <div class="card-inner" id="c">
+      <div class="card-inner" id="card">
         <div class="card-face front">
-          <div id="i" style="font-size:100px;margin-bottom:16px;"></div>
-          <div id="a" class="article"></div>
-          <div id="w" class="word"></div>
+          <div id="icon" style="font-size:110px; margin-bottom:20px;"></div>
+          <div id="article" class="article"></div>
+          <div id="word" class="word"></div>
         </div>
         <div class="card-face back">
-          <div id="m" class="meaning"></div>
+          <div class="meaning" id="meaning"></div>
+          <div class="synonyms" id="synonyms"></div>
+          <div class="example" id="example"></div>
         </div>
       </div>
     </div>
     <div class="controls">
-      <button id="p">◀ Vorherige</button>
-      <button id="nxt" class="btn-red">Nächste ▶</button>
+      <button id="btn-prev">◀ Vorherige</button>
+      <button id="btn-next" class="btn-red">Nächste ▶</button>
     </div>
   </div>
 
 </div>
 
 <script>
-// Data — 20 words (expandable)
-const v = [
-  {i:"🍽️",a:"der",w:"Teller",m:"flacher Gegenstand zum Servieren von Speisen"},
-  {i:"☕",a:"die",w:"Tasse",m:"Gefäß mit Henkel für heiße Getränke"},
-  {i:"🥛",a:"das",w:"Glas",m:"durchsichtiger Behälter für Getränke"},
-  {i:"🍴",a:"die",w:"Gabel",m:"Esswerkzeug mit Zinken"},
-  {i:"🔪",a:"das",w:"Messer",m:"scharfes Schneidewerkzeug"},
-  {i:"🥄",a:"der",w:"Löffel",m:"Besteck mit Schale für Suppe"},
-  {i:"🧂",a:"das",w:"Salz",m:"weißes Würzmittel"},
-  {i:"🌶️",a:"der",w:"Pfeffer",m:"scharfes Gewürz"},
-  {i:"🛢️",a:"das",w:"Öl",m:"Flüssigkeit zum Braten"},
-  {i:"🍬",a:"der",w:"Zucker",m:"süßes Pulver zum Süßen"},
-  {i:"🍞",a:"das",w:"Brot",m:"Grundnahrungsmittel aus Mehl"},
-  {i:"🧀",a:"der",w:"Käse",m:"Milchprodukt"},
-  {i:"🥚",a:"das",w:"Ei",m:"Lebensmittel vom Huhn"},
-  {i:"🍅",a:"die",w:"Tomate",m:"rote Frucht als Gemüse"},
-  {i:"🧅",a:"die",w:"Zwiebel",m:"Knolle zum Würzen"},
-  {i:"🧄",a:"der",w:"Knoblauch",m:"würzige Knolle"},
-  {i:"🥩",a:"das",w:"Fleisch",m:"Muskelgewebe von Tieren"},
-  {i:"🐟",a:"der",w:"Fisch",m:"Tier aus dem Wasser"},
-  {i:"🥦",a:"das",w:"Gemüse",m:"essbare Pflanzenteile"},
-  {i:"🍎",a:"das",w:"Obst",m:"süße Früchte"}
+// ──── Data (20 كلمة جاهزة – يمكن توسيعها إلى 50+) ────────────────────────────────────────
+const vocab = [
+  {icon:"🍽️", art:"der", word:"Teller",    meaning:"flacher Gegenstand aus Porzellan oder Keramik zum Servieren von Speisen", syn:["Speiseteller","Essteller"], ex:"Der Teller ist groß und weiß."},
+  {icon:"☕",  art:"die", word:"Tasse",     meaning:"kleines Gefäß mit Henkel für heiße Getränke", syn:["Kaffeetasse","Teetasse"], ex:"Die Tasse Kaffee ist heiß."},
+  {icon:"🥛",  art:"das", word:"Glas",      meaning:"durchsichtiger Behälter für Getränke", syn:["Trinkglas","Wasserglas"], ex:"Ich trinke Wasser aus dem Glas."},
+  {icon:"🍴",  art:"die", word:"Gabel",     meaning:"Esswerkzeug mit Zinken zum Aufspießen", syn:["Essgabel"], ex:"Nimm die Gabel in die rechte Hand."},
+  {icon:"🔪",  art:"das", word:"Messer",    meaning:"scharfes Werkzeug zum Schneiden", syn:["Tafelmesser","Küchenmesser"], ex:"Das Messer schneidet gut."},
+  {icon:"🥄",  art:"der", word:"Löffel",    meaning:"Besteck mit Schale für Suppe und Dessert", syn:["Suppenlöffel","Teelöffel"], ex:"Ich esse Suppe mit dem Löffel."},
+  {icon:"🧂",  art:"das", word:"Salz",      meaning:"weißes kristallines Würzmittel", syn:["Speisesalz","Meersalz"], ex:"Das Essen braucht mehr Salz."},
+  {icon:"🌶️", art:"der", word:"Pfeffer",   meaning:"scharfes Gewürz aus Pfefferkörnern", syn:["schwarzer Pfeffer"], ex:"Pfeffer macht das Gericht würzig."},
+  {icon:"🛢️", art:"das", word:"Öl",        meaning:"fettige Flüssigkeit zum Braten und Kochen", syn:["Olivenöl","Sonnenblumenöl"], ex:"Ich brate das Fleisch in Öl."},
+  {icon:"🍬",  art:"der", word:"Zucker",    meaning:"süßes weißes Pulver zum Süßen von Speisen und Getränken", syn:["Haushaltszucker","Rohrzucker"], ex:"Der Kaffee braucht Zucker."},
+  {icon:"🍞",  art:"das", word:"Brot",      meaning:"Grundnahrungsmittel aus Mehl, Wasser und Hefe", syn:["Weißbrot","Vollkornbrot"], ex:"Frisches Brot schmeckt am besten."},
+  {icon:"🧀",  art:"der", word:"Käse",      meaning:"Milchprodukt in verschiedenen Sorten", syn:["Hartkäse","Weichkäse"], ex:"Der Käse ist lecker."},
+  {icon:"🥚",  art:"das", word:"Ei",        meaning:"Lebensmittel von Vögeln, meist vom Huhn", syn:["Hühnerei"], ex:"Ich koche mir ein Ei."},
+  {icon:"🍅",  art:"die", word:"Tomate",    meaning:"rote Frucht, die als Gemüse verwendet wird", syn:["Paradeiser","Fleischtomate"], ex:"Die Tomate ist reif."},
+  {icon:"🧅",  art:"die", word:"Zwiebel",   meaning:"Knolle zum Würzen von Speisen", syn:["Schalotte","Gemüsezwiebel"], ex:"Die Zwiebel lässt die Augen tränen."},
+  {icon:"🧄",  art:"der", word:"Knoblauch", meaning:"würzige Knolle zum Kochen", syn:["Knoblauchzehe"], ex:"Knoblauch gibt dem Essen Aroma."},
+  {icon:"🥩",  art:"das", word:"Fleisch",   meaning:"Muskelgewebe von Tieren zum Essen", syn:["Rindfleisch","Schweinefleisch"], ex:"Das Fleisch ist zart."},
+  {icon:"🐟",  art:"der", word:"Fisch",     meaning:"Tier aus dem Wasser zum Essen", syn:["Seefisch","Forelle"], ex:"Ich esse gerne Fisch."},
+  {icon:"🥦",  art:"das", word:"Gemüse",    meaning:"essbare Pflanzenteile", syn:["Blattgemüse","Wurzelgemüse"], ex:"Gemüse ist gesund."},
+  {icon:"🍎",  art:"das", word:"Obst",      meaning:"süße essbare Früchte", syn:["Frucht","Apfel"], ex:"Obst schmeckt süß."}
 ];
 
-let idx = 0;
+let currentIndex = 0;
 
-// Safe DOM
-const $ = id => document.getElementById(id);
+// ──── Safe DOM access & init ────────────────────────────────
+const els = {};
+function initApp() {
+  els.card    = document.getElementById('card');
+  els.icon    = document.getElementById('icon');
+  els.article = document.getElementById('article');
+  els.word    = document.getElementById('word');
+  els.meaning = document.getElementById('meaning');
+  els.synonyms= document.getElementById('synonyms');
+  els.example = document.getElementById('example');
+  els.num     = document.getElementById('num');
 
-// Load card
-function load() {
-  const item = v[idx];
-  $("i").textContent = item.i;
-  $("a").textContent = item.a;
-  $("a").className = `article ${item.a}`;
-  $("w").textContent = item.w;
-  $("m").textContent = item.m;
-  $("n").textContent = idx + 1;
-  $("c").classList.remove("flipped");
+  if (!els.card) {
+    console.error("DOM elements not found – check HTML IDs");
+    return;
+  }
+
+  loadCard();
 }
 
-// Flip + sound
-function flip() {
-  $("c").classList.toggle("flipped");
+// ──── Paper flip sound (only after user interaction) ────────
+function playFlip() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const now = ctx.currentTime;
     const osc = ctx.createOscillator();
-    const g = ctx.createGain();
-    osc.connect(g); g.connect(ctx.destination);
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
     osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(220, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.18);
-    g.gain.setValueAtTime(0.4, ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.25);
-  } catch {}
+    osc.frequency.setValueAtTime(200, now);
+    osc.frequency.exponentialRampToValueAtTime(60, now + 0.22);
+    gain.gain.setValueAtTime(0.45, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+    osc.start(now);
+    osc.stop(now + 0.28);
+  } catch (e) {
+    // Silent fail – common on first load
+  }
 }
 
-// Start
-$("btn-start").onclick = () => {
-  $("s-name").classList.remove("active");
-  $("s-cards").classList.add("active");
-  idx = 0;
-  load();
-};
+// ──── Load current card ─────────────────────────────────────
+function loadCard() {
+  if (!els.card) return;
 
-$("c").onclick = flip;
+  const item = vocab[currentIndex];
+  els.icon.textContent = item.icon;
+  els.article.textContent = item.art;
+  els.article.className = `article ${item.art}`;
+  els.word.textContent = item.word;
+  els.meaning.textContent = item.meaning;
+  els.synonyms.innerHTML = item.syn.map(s => 
+    `<div style="background:rgba(212,175,55,0.12); padding:6px 14px; border-radius:10px; margin:4px;">${s}</div>`
+  ).join('');
+  els.example.textContent = `„${item.ex}“`;
+  els.num.textContent = currentIndex + 1;
+  els.card.classList.remove("flipped");
+}
 
-$("nxt").onclick = () => {
-  idx++;
-  if (idx >= v.length) {
-    alert("Fertig! Alle Wörter durch.");
-    idx = 0;
+// ──── Events ────────────────────────────────────────────────
+document.getElementById("btn-start").addEventListener("click", () => {
+  document.getElementById("screen-name").classList.remove("active");
+  document.getElementById("screen-cards").classList.add("active");
+  currentIndex = 0;
+  loadCard();
+});
+
+els.card.addEventListener("click", () => {
+  playFlip();
+  els.card.classList.toggle("flipped");
+});
+
+document.getElementById("btn-next").addEventListener("click", () => {
+  currentIndex++;
+  if (currentIndex >= vocab.length) {
+    alert("Super! Du hast alle Wörter durchgesehen!");
+    currentIndex = 0;
   }
-  load();
-};
+  loadCard();
+});
 
-$("p").onclick = () => {
-  if (idx > 0) {
-    idx--;
-    load();
+document.getElementById("btn-prev").addEventListener("click", () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    loadCard();
   }
-};
+});
 
-// Init
-load();
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 </script>
 </body>
 </html>
